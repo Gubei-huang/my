@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hwj.dao.BookDao">
+    <resultMap id="bookMap" type="book">
+        <id column="ISBN" property="isbn"/>
+        <result column="bookName" property="bookName"/>
+        <result column="author" property="author"/>
+        <result column="price" property="price"/>
+        <result column="publishTime" property="publishTime"/>
+        <result column="cover" property="cover"/>
+    </resultMap>
+    <insert id="insertBook">
+        insert into book values (#{isbn},#{bookName},#{author},#{price},#{publishTime},#{cover})
+    </insert>
+    <select id="listBook" resultMap="bookMap">
+        select * from book
+    </select>
+    <select id="listBookByIsbn" resultMap="bookMap">
+        select * from book
+        where ISBN like '%${isbn}%'
+    </select>
+    <select id="listBookByBookName" resultMap="bookMap">
+        select * from book
+        where bookName like '%${bookName}%'
+    </select>
+    <select id="listBookByAuthor" resultMap="bookMap">
+        select * from book
+        where author like '%${author}%'
+    </select>
+    <delete id="deleteBook">
+        delete from book where ISBN = #{isbn}
+    </delete>
+    <update id="updateBook">
+        update book set bookName=#{bookName},author=#{author},price=#{price},
+                        publishTime=#{publishTime},cover=#{cover}
+        where ISBN=#{isbn}
+    </update>
+</mapper>
